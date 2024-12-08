@@ -27,7 +27,7 @@ const Dashboard = () => {
                 </Link>
                 {openSubmenu === 'profile' && (
                     <div className="submenu">
-                        <NavLink to="/studentprofile/studentadd" activeClassName="active-link" ><FaFileAlt /> Add Personal Details</NavLink>
+                        <NavLink to="/patientprofile/patientadd" activeClassName="active-link" ><FaFileAlt /> Add Personal Details</NavLink>
                         <NavLink to="/studentprofile/interestsadd" activeClassName="active-link"><FaFileArchive /> Add Interests</NavLink>
                         <NavLink to="/studentprofile/studentview" activeClassName="active-link" ><FaEye /> View Profile</NavLink>
 

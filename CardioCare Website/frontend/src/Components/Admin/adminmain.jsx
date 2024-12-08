@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Navbar1 from '../Navbar/navbar';
-import Dashboard from '../SideDashboard/dashboardpatient';
-import Personadd from './Person Add/personadd';
+import Personadd from '../Patient/Person Add/personadd';
+import Dashboardadmin from '../SideDashboard/dashboardadmin';
 
 
-export default function PatientMain() {
+export default function AdminMain() {
   const userData = JSON.parse(localStorage.getItem('AI-CardioCareUsers'));
   const userRole = userData?.user?.role;
 
-  if (!userData || userRole !== 'Patient') {
+  if (!userData || userRole !== 'Admin') {
     return <Redirect to="/page-not-found" />;
   }
 
@@ -19,10 +19,10 @@ export default function PatientMain() {
         <Navbar1 />
       </div>
       <div style={{ display: 'flex' }}>
-        <Dashboard />
+        <Dashboardadmin />
         <div className="main-content">
           <Switch>
-           <Route exact path="/patientprofile/patientadd" component={Personadd} />
+           <Route exact path="/admin/profileadd" component={Personadd} />
           </Switch>
         </div>
       </div>

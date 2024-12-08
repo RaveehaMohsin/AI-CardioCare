@@ -1,13 +1,12 @@
 import './App.css';
-import './App.css';
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom'; 
-// import auth from './Components/auth/auth';
 import KeyboardScroll from './Components/keyboardscroll'; 
-// import PageNotFound from './Components/PageNotFound/Pagenotfound';
-
-// import LandingPage from './Components/LandingPage/LandingPage';
-
+import Auth from './Components/auth/auth';
+import PageNotFound from './Components/PageNotFound/Pagenotfound';
+import LandingPage from './Components/LandingPage/LandingPage';
+import PatientMain from './Components/Patient/patientmain';
+import AdminMain from './Components/Admin/adminmain';
 
 function App() {
   return (
@@ -15,35 +14,31 @@ function App() {
       <KeyboardScroll />
       <Switch>
         {/* Redirect to /landing when the base URL is accessed */}
-        {/* <Route exact path="/">
-          <Redirect to="/careerpathnavigator" />
-        </Route> */}
+        <Route exact path="/">
+          <Redirect to="/cardiocare" />
+        </Route>
 
 
        {/* Landing Route */}
-        {/* <Route exact path="/careerpathnavigator"  component={LandingPage} /> */}
+        <Route exact path="/cardiocare"  component={LandingPage} />
 
 
         {/* Auth Route */}
-        {/* <Route exact path="/auth" component={auth} /> */}
+        <Route exact path="/auth" component={Auth} />
 
         {/* Student Role Routes */}
-        {/* <Route exact path="/student/dashboard" component={StudentMain} /> */}
+        <Route exact path="/patientprofile/patientadd" component={PatientMain} />
        
-
-  
-
-
 
 
         {/* Admin Route */}
-        {/* <Route exact path="/admin/dashboard" component={AdminMain} /> */}
+        <Route exact path="/admin/profileadd" component={AdminMain} />
 
         
        
         {/* Default */}
         {/* Catch-All Route for Undefined Paths */}
-        {/* <Route component={PageNotFound} /> */}
+        <Route component={PageNotFound} />
       </Switch>
 
     </div>
