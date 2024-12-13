@@ -1,0 +1,531 @@
+:root {
+    --text-color: #303972;
+    --text-secondary: #00273a;
+    --light-color: #a098ae;
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #e8e3e3;
+    --gray-2: #757575;
+    --icon-color: #fb7d5b;
+    --icon-secondary: #fcc43e;
+  
+    --container-color: #f9f9f9;
+    --background-color: #00273a1a;
+  }
+  
+  .profile-header {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .header-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  
+  .profile-picture-container {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    transform: translateY(
+      -40%
+    ); /* Moves the profile picture upwards by 50% of its height */
+    border: 7px solid #fff;
+    border-radius: 50%;
+  }
+  
+  .profile-picture {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Styling for the student's name */
+  .student-name {
+    text-align: left;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: -30px;
+    color: var(--text-secondary);
+  }
+  
+  .student-name h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  .info-box{
+    margin-bottom: 20px;
+  }
+  .stars{
+    font-size: 30px;
+  
+  }
+  .feedback {
+    color: #757575;
+    text-align: left;
+    margin-bottom: 10px; /* Adds space between reviews */
+  }
+  
+  
+  /* Personal information section styling */
+  .personal-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  .info-column {
+    text-align: left;
+    width: 45%;
+    flex: 4;
+  }
+  .cell {
+    margin: 10px 40px 50px 50px;
+    padding-left: 15px; /* Adjust the value as needed */
+    padding-right: 20px; /* Adjust the value as needed */
+  }
+  .heading-text {
+    color: var(--gray-2);
+    font-weight: normal;
+    line-height: 0.5px;
+  }
+  
+  .info-text {
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 16px;
+    font-family: poppins;
+    margin-top: 5px; /* Add a little space between heading and info */
+  }
+  
+  .main-container {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+    border-radius: 12px;
+    padding: 20px 30px;
+    margin: 20px;
+    max-width: 1250px;
+    margin-left: auto;
+  }
+  
+  .profile-background-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between profile and background */
+    flex: 1; /* Ensure this container takes up available space */
+  }
+  .profile-container {
+    flex: 4; /* 80% of the main container */
+    max-width: 100%; /* Ensures it can scale to flex percentage */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: var(--container-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 750px;
+  }
+  
+  .icon-container {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background-color: var(--icon-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-60px, -10px);
+  }
+  
+  .icon-view {
+    width: 28px;
+    height: 20px;
+    color: var(--gray);
+  }
+  
+  .background-heading {
+    background-color: var(--container-color);
+    padding: 20px 20px 20px 20px;
+    color: var(--text-color);
+    text-align: left;
+    font-size: medium;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-bottom: 0;
+  }
+  
+  .background-info-container {
+    margin-top: 50px;
+  }
+  
+  .background-info-table {
+    background-color: var(--container-color);
+    width: 100%;
+  }
+  .table-heading {
+    font-weight: normal;
+    padding: 20px 10px 20px 10px;
+    background-color: var(--background-color);
+  }
+  .background-info-table td {
+    padding: 20px 10px 20px 10px;
+    text-align: center;
+  }
+  .tbody tr td {
+    font-size: large;
+  }
+  
+  tbody tr td:nth-child(2) {
+    color: var(--gray-2); /* Degree column color */
+  }
+  
+  tbody tr td:nth-child(3),
+  tbody tr td:nth-child(1) {
+    color: var(--text-color);
+    font-weight: bold;
+  }
+  
+  .pagination-buttons {
+    background-color: var(--container-color);
+    padding: 20px 50px 20px 10px;
+    text-align: right;
+  }
+  
+  .pagination-button {
+    width: 40px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: var(--text-secondary);
+    margin: 5px;
+  }
+  
+  .additional-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .info-box {
+    background-color: var(--container-color);
+    padding: 26px;
+    border-radius: 8px;
+    text-align: left;
+  }
+  
+  .info-box h3,
+  .info-detail-box h3 {
+    color: var(--text-secondary);
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .info-box p,
+  .info-detail-box p {
+    color: var(--gray-2);
+    font-size: medium;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .info-detail-box{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    width: auto;
+  }
+  
+  .info-content-icon01 {
+    color: var(--icon-color);
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+  }
+  .info-content-icon02 {
+    color: var(--icon-secondary);
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+  }
+  .info-content-icon03 {
+    color: var(--text-secondary);
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+  }
+  .card{
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  
+  }
+  
+  .line01 {
+    width: 10px;
+    background: var(--text-secondary);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .line02 {
+    width: 10px;
+    background: var(--icon-secondary);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .line03 {
+    width: 10px;
+    background: var(--icon-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .line04 {
+    width: 10px;
+    background: var(--text-secondary);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  /* Progress Bar Container */
+  .progress-bar {
+    height: 7px; /* Set an explicit height */
+    background-color: var(--gray);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5px;
+    position: relative;
+  }
+  
+  /* Inner Progress */
+  .progress01 {
+    width: 70%; /* Adjust this for the progress value */
+    height: 100%;
+    background: linear-gradient(to right, #ff6b6b, #f4d35e, #4ea685);
+    border-radius: 5px;
+  }
+  .progress02 {
+    width: 40%; /* Adjust this for the progress value */
+    height: 100%;
+    background: linear-gradient(to right, #ff6b6b, #f4d35e, #4ea685);
+    border-radius: 5px;
+  }
+  .progress03 {
+    width: 50%; /* Adjust this for the progress value */
+    height: 100%;
+    background: linear-gradient(to right, #ff6b6b, #f4d35e, #4ea685);
+    border-radius: 5px;
+  }
+  .progress04 {
+    width: 70%; /* Adjust this for the progress value */
+    height: 100%;
+    background: linear-gradient(to right, #ff6b6b, #f4d35e, #4ea685);
+    border-radius: 5px;
+  }
+  .shine {
+    width: 90px;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.1)
+    );
+    position: absolute;
+    top: 0;
+    left: -50px;
+    animation: shine 2.5s linear infinite;
+    mix-blend-mode: overlay; /* Ensures blending effect */
+  }
+  
+  .detail-button {
+    width: 240px;
+    color: #00273a;
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+  }
+  .for-button {
+    text-align: center;
+  }
+  /* Keyframes for Shine Animation */
+  @keyframes shine {
+    0% {
+      left: -50px;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  
+  @media (max-width: 1050px) {
+    .main-container {
+      flex-direction: column; /* Stack the profile and background info on smaller screens */
+      padding: 10px; /* Reduce padding on smaller screens */
+    }
+  
+    .profile-container,
+    .background-info-container {
+      width: 100%;
+      margin-bottom: 20px; /* Add margin between sections */
+    }
+  
+    .additional-info-container {
+      width: 100%;
+    }
+  
+    .profile-header {
+      height: 180px; /* Adjust header height for smaller screens */
+    }
+  
+    .profile-picture-container {
+      left: 10px; /* Adjust positioning of profile picture */
+      transform: translateY(-30%); /* Ensure it's properly positioned */
+    }
+  
+    .student-name h2 {
+      font-size: 20px; /* Adjust font size for smaller screens */
+    }
+  }
+  
+  /* Tablet screens */
+  @media (max-width: 800px) {
+    .student-name h2 {
+      font-size: 18px; /* Adjust font size for tablets */
+    }
+    .profile-container {
+      max-height: 1050px;
+    }
+  
+    .profile-picture {
+      width: 100px; /* Resize profile picture */
+      height: 100px;
+    }
+  
+    .profile-header {
+      height: 200px; /* Adjust header height */
+    }
+  
+    .info-column {
+      width: 100%; /* Stack personal info in a single column */
+      margin-bottom: 20px; /* Add space between columns */
+    }
+  
+    .personal-info {
+      flex-direction: column; /* Stack personal info vertically */
+      gap: 20px; /* Adjust gap for vertical layout */
+    }
+  
+    .card1 {
+      flex-direction: column; /* Stack the card's content for mobile view */
+      padding: 10px; /* Reduce padding */
+    }
+  
+    .pagination-buttons {
+      text-align: center; /* Center pagination buttons */
+    }
+  
+    .additional-info-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+  
+    .background-heading {
+      font-size: 16px; /* Adjust heading font size */
+      padding: 15px; /* Adjust padding */
+    }
+  }
+  .interest-item {
+    margin-bottom: 20px; /* Adds space after each interest item */
+  }
+  
+  /* Mobile screens */
+  @media (max-width: 600px) {
+    .main-container {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .profile-container {
+      width: 100%;
+      padding: 10px; /* Reduce padding */
+      max-height: 1050px;
+    }
+  
+    .profile-header {
+      height: 180px; /* Adjust header height for mobile */
+    }
+  
+    .profile-picture-container {
+      left: 15px; /* Adjust position for mobile screens */
+      transform: translateY(-30%);
+    }
+  
+    .student-name h2 {
+      font-size: 16px; /* Adjust font size for mobile */
+    }
+  
+    .info-column {
+      width: 100%;
+      margin-bottom: 20px; /* Stack info columns */
+    }
+  
+    .personal-info {
+      flex-direction: column; /* Stack personal info vertically */
+      gap: 20px; /* Adjust gap */
+    }
+  
+    .card1 {
+      flex-direction: column;
+      padding: 8px; /* Adjust padding */
+    }
+  
+    .card-content h3 {
+      margin-left: 2%;
+    }
+  
+    .pagination-buttons {
+      text-align: center;
+    }
+  
+    .background-heading {
+      font-size: 14px; /* Adjust heading font size for mobile */
+    }
+  
+    .profile-picture {
+      width: 100px;
+      height: 100px; /* Adjust profile picture size */
+    }
+  
+    .info-text {
+      font-size: 14px; /* Adjust font size of info text */
+    }
+  }
+  

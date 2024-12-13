@@ -1,0 +1,148 @@
+/* MainContainer */
+.MainContainer {
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background-color: #fdfdfd;
+    overflow: hidden;
+    margin-left: 250px; /* Adjusts for sidebar */
+    margin-right: 5px;
+    transition: margin-left 0.3s ease; /* Smooth transition when sidebar collapses */
+  }
+  
+  @media (max-width: 1250px) {
+    .MainContainer {
+      margin-left: 0; /* Aligns content when sidebar is hidden */
+      margin-right: 5px;
+    }
+  }
+  
+  /* Chat Container */
+  .ChatContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    height: 560px;
+  }
+  
+  /* Messages Styling */
+  .MessageList {
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    height: 100%;
+    overflow-y: auto;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .Message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .Message.user {
+    justify-content: flex-end;
+  }
+  
+  .Message.chatbot {
+    justify-content: flex-start;
+  }
+  
+  /* Message Bubbles */
+  .Message > .message-content {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Message.user .message-content {
+    background-color: #ffce54; /* Dark Yellow */
+    color: #ffffff;
+    border-top-right-radius: 0;
+  }
+  
+  .Message.chatbot .message-content {
+    background-color: #ffffff;
+    color: #4a4a4a;
+    border-top-left-radius: 0;
+    border: 1px solid #ddd;
+  }
+  
+  /* Avatars for User and Chatbot */
+  .Message > .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 10px;
+    background-size: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Message.user .avatar {
+    margin-left: 10px;
+    background: url('https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png') no-repeat center center;
+    background-size: cover;
+  }
+  
+  .Message.chatbot .avatar {
+    margin-right: 10px;
+    background: url('https://static.vecteezy.com/system/resources/previews/007/225/199/non_2x/robot-chat-bot-concept-illustration-vector.jpg') no-repeat center center;
+    background-size: cover;
+  }
+  
+  /* Typing Indicator */
+  .TypingIndicator {
+    color: #ffce54;
+    font-style: italic;
+    padding: 5px;
+  }
+  
+  /* Message Input */
+  .MessageInput {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .MessageInput input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #4a4a4a;
+    background-color: transparent;
+  }
+  
+  .MessageInput input::placeholder {
+    color: #bbb;
+  }
+  
+  .MessageInput button {
+    background-color: #ffce54;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .MessageInput button:hover {
+    background-color: #ffae00;
+  }
+  

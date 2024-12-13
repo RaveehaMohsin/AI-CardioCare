@@ -28,6 +28,9 @@ function App() {
 
         {/* Student Role Routes */}
         <Route exact path="/patientprofile/patientadd" component={PatientMain} />
+        <Route exact path="/patientprofile/patientview" component={PatientMain} />
+        <Route exact path="/patient/chatbot" component={PatientMain} />
+        <Route exact path="/patient/heartdisease" component={PatientMain} />
        
 
 

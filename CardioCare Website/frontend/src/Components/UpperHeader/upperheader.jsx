@@ -10,7 +10,7 @@ export default function upperheader(props) {
         </div>
         <div className="right-section">
           <div className="user-name">{props.name}</div>
-          <img src="https://cdn-icons-png.flaticon.com/512/5850/5850276.png" alt="Profile" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn-nLImJsiW22wj9pYjhGbczfmBXX0pR-UpQ&s" alt="Profile" />
           <button className="icon-btn">
             <FaSignOutAlt />
           </button>

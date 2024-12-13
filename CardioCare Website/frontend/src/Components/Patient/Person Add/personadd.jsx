@@ -26,6 +26,17 @@ export default function Personadd() {
     return `${year}-${month}-${day}`;
   };
 
+   const handleInputChange = (setter) => (e) => {
+    const value = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(value)) { // Allows only alphabets and spaces
+      setter(value);
+    }
+  };
+
+  const handleAddressChange = (e) => {
+    sethomeaddress(e.target.value);
+  };
+
 
   useEffect(() => {
     const userId = currentuser.userId;
@@ -69,6 +80,15 @@ export default function Personadd() {
     setphoneno("");
     setcnic("");
     setSelectedImage(null);
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+
+    // Allow only digits, "+" at the start, and ensure it doesn't exceed a reasonable length
+    if (/^\+?[0-9]{0,15}$/.test(value)) {
+      setphoneno(value);
+    }
   };
   
   
@@ -217,7 +237,8 @@ export default function Personadd() {
                 name="city"
                 required
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                
+                onChange={handleInputChange(setCity)}
               />
 
               <label>Country</label>
@@ -228,7 +249,7 @@ export default function Personadd() {
                 required
                 placeholder="USA"
                 value={country}
-                onChange={(e) => setcountry(e.target.value)}
+                onChange={handleInputChange(setcountry)}
               />
 
               <label>Home Address</label>
@@ -237,8 +258,17 @@ export default function Personadd() {
                 className="form-control"
                 name="homeaddress"
                 value={homeaddress}
-                onChange={(e) => sethomeaddress(e.target.value)}
+                onChange={handleAddressChange}
+                placeholder="Enter your home address"
+                style={{
+                  borderColor: homeaddress.length >= 7 ? "lightgrey" : "red",
+                }}
               />
+              {homeaddress.length < 7 && (
+                <small className="text-danger">
+                  Address must be at least 7 characters long.
+                </small>
+              )}
             </div>
 
             {/* Right Column - Second Set of Fields */}
@@ -280,7 +310,9 @@ export default function Personadd() {
                 placeholder="+12345678"
                 name="phoneno"
                 value={phoneno}
-                onChange={(e) => setphoneno(e.target.value)}
+                onChange={handlePhoneChange}
+                pattern="^\+?[0-9]{7,15}$" // Enforce at least 7 to 15 digits including optional "+"
+                title="Phone number must be between 7 to 15 digits and can optionally start with +"
               />
 
               <label>CNIC</label>

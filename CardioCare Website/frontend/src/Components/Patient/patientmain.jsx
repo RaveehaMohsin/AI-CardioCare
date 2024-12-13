@@ -3,6 +3,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Navbar1 from '../Navbar/navbar';
 import Dashboard from '../SideDashboard/dashboardpatient';
 import Personadd from './Person Add/personadd';
+import PatientView from './Patient View/patientview';
+import Chatbot from './Chatbot/chatbot';
+import Predictheartdisease from './Predict Heart Disease/predictheartdisease';
 
 
 export default function PatientMain() {
@@ -23,6 +26,10 @@ export default function PatientMain() {
         <div className="main-content">
           <Switch>
            <Route exact path="/patientprofile/patientadd" component={Personadd} />
+           <Route exact path="/patientprofile/patientview" component={PatientView} />
+           <Route exact path="/patient/heartdisease" component={Predictheartdisease} />
+           <Route exact path="/patient/chatbot" component={Chatbot} />
+           
           </Switch>
         </div>
       </div>
