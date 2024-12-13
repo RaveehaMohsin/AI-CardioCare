@@ -54,7 +54,7 @@ else:
 label_encoders = {}
 
 # Columns for Label Encoding
-label_encode_columns = ['Sex', 'ExerciseAngina', 'Smoking', 'FamilyHistory']
+label_encode_columns = ['Sex', 'ExerciseAngina', 'Smoking', 'FamilyHistory' , 'HyperTension']
 
 # Columns for One-Hot Encoding
 one_hot_encode_columns = ['ChestPainType', 'RestingECG', 'ST_Slope']
@@ -283,7 +283,7 @@ print("After SMOTE:", dict(zip(*np.unique(y_train_resampled, return_counts=True)
     # print(classification_report(y_test, y_pred_xgb))
     # print(confusion_matrix(y_test, y_pred_xgb))
 
-#(XGBoost Evaluation:0.95)
+#(XGBoost Evaluation:0.94)
 
 
 # Support Vector Machine
@@ -296,7 +296,7 @@ print("After SMOTE:", dict(zip(*np.unique(y_train_resampled, return_counts=True)
     # print(classification_report(y_test, y_pred_svm))
     # print(confusion_matrix(y_test, y_pred_svm))
 
-#(SVM Evaluation:0.95)
+#(SVM Evaluation:0.96)
 
 
 # Neural Network
