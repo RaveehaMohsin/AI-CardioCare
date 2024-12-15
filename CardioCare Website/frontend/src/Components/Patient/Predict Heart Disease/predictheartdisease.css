@@ -60,92 +60,89 @@
     color: #b71c1c; /* Dark red for headings */
   }
   
+  /* PredictHeartDisease.module.css */
+
   .predict-heart-disease-input-section {
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: 10px;
-    padding: 20px;
+    padding: 30px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
   }
   
+  /* Title of the section */
+  .predict-heart-disease-input-section h2 {
+    color: #b71c1c; /* Dark red color for the heading */
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center; /* Center align the heading */
+  }
+  
+  /* Container for the toggle buttons */
   .predict-heart-disease-input-options {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column; /* Arrange buttons and file upload vertically */
+    align-items: center; /* Center all content inside this container */
+    gap: 20px; /* Space between buttons and file upload section */
   }
   
-  .predict-heart-disease-upload-section {
-    flex: 1;
-    text-align: center;
-  }
-  
-  .predict-heart-disease-or {
-    font-weight: bold;
-    color: #b71c1c;
-    align-self: center;
-  }
-  
-  .predict-heart-disease-manual-entry {
-    flex: 2;
-  }
-  
-  .predict-heart-disease-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-  
-  .predict-heart-disease-form-group {
+  /* Container for the toggle buttons */
+  .toggle-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center; /* Center the buttons */
+    gap: 20px; /* Space between the buttons */
   }
   
-  .predict-heart-disease-form-group label {
-    font-weight: bold;
-    color: #b71c1c;
-    margin-bottom: 5px;
-  }
-  
-  .predict-heart-disease-form-group input,
-  .predict-heart-disease-form-group select {
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-  }
-  
-  .predict-heart-disease-submit-button {
+  /* Styling for toggle buttons */
+  .toggle-buttons button {
+    padding: 12px 20px;
     background-color: #d32f2f;
-    color: #fff;
-    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    display: block;
-    width: 100%;
-    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 180px; /* Ensure both buttons are the same size */
+    text-align: center; /* Ensure text is centered inside buttons */
   }
   
-  .predict-heart-disease-submit-button:hover {
+  /* Active state for the button */
+  .toggle-buttons button.active {
+    background-color: #b71c1c; /* Darker red for active state */
+  }
+  
+  /* Hover effect for buttons */
+  .toggle-buttons button:hover {
     background-color: #b71c1c;
   }
   
-  .predict-heart-disease-result-section {
-    background-color: #fefefe;
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    padding: 20px;
+  /* Section for file upload */
+  .predict-heart-disease-upload-section {
     text-align: center;
   }
   
-  .predict-heart-disease-result-section h3 {
-    color: #b71c1c;
+  .predict-heart-disease-upload-section h3 {
+    font-size: 20px;
+    color: #b71c1c; /* Heading color for upload section */
+    margin-bottom: 10px;
   }
   
-  .predict-heart-disease-prediction {
-    font-weight: bold;
-    font-size: 18px;
-    color: #d32f2f;
+  .predict-heart-disease-upload-section input[type="file"] {
+    padding: 15px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Ensure file input takes up full width */
+    max-width: 400px; /* Limit the maximum width of the file input */
+    margin-top: 20px; /* Space between buttons and the file input */
   }
   
+  /* Focus state for the file input */
+  .predict-heart-disease-upload-section input[type="file"]:focus {
+    border-color: #d32f2f; /* Highlight border color when focused */
+  }

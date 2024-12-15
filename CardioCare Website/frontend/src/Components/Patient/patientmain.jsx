@@ -5,7 +5,7 @@ import Dashboard from '../SideDashboard/dashboardpatient';
 import Personadd from './Person Add/personadd';
 import PatientView from './Patient View/patientview';
 import Chatbot from './Chatbot/chatbot';
-import Predictheartdisease from './Predict Heart Disease/predictheartdisease';
+import PredictDiseasePage from './Predict Heart Disease/pagepredict';
 
 
 export default function PatientMain() {
@@ -27,7 +27,7 @@ export default function PatientMain() {
           <Switch>
            <Route exact path="/patientprofile/patientadd" component={Personadd} />
            <Route exact path="/patientprofile/patientview" component={PatientView} />
-           <Route exact path="/patient/heartdisease" component={Predictheartdisease} />
+           <Route exact path="/patient/heartdisease" component={PredictDiseasePage} />
            <Route exact path="/patient/chatbot" component={Chatbot} />
            
           </Switch>

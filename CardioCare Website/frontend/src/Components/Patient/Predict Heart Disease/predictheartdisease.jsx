@@ -1,171 +1,158 @@
 import React, { useState } from 'react';
-import Upperheader from "../../UpperHeader/upperheader";
 import './predictheartdisease.css';
 import heartImage from '../../../Assets/heart.jpg';
+import Swal from "sweetalert2";
 
-export default function PredictHeartDisease() {
-  const userData = JSON.parse(localStorage.getItem("AI-CardioCareUsers"));
-  const currentuser = userData.user;
-  const username = currentuser.firstName + " " + currentuser.lastName;
-
-  const [formData, setFormData] = useState({
-    age: '',
-    sex: '',
-    cp: '',
-    trestbps: '',
-    chol: '',
-    fbs: '',
-    restecg: '',
-    thalach: '',
-    exang: '',
-    oldpeak: '',
-    slope: '',
-    ca: '',
-    thal: '',
-  });
-
-  // State for image upload
-  const [labReport, setLabReport] = useState(null);
-  const [labReportError, setLabReportError] = useState('');
-
-  // State for prediction result
-  const [prediction, setPrediction] = useState(null);
+export default function PredictHeartDisease({ setisbtnclick }) {
   const [isManualInput, setIsManualInput] = useState(false);
+  const [file, setFile] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleManualInputClick = () => {
+    setIsManualInput(true);
+    setisbtnclick(true); // Trigger the modal to show when manually input is selected
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.size < 5000000) { // Check file size (limit to 5MB)
-      if (file.type.includes("image")) {
-        setLabReport(file);
-        setLabReportError('');
-      } else {
-        setLabReportError('Please upload a valid image file.');
-      }
-    } else {
-      setLabReportError('File is too large. Please upload a file smaller than 5MB.');
-    }
+  const handleUploadClick = () => {
+    setIsManualInput(false); // Hide manual input and go back to file upload
   };
 
-  const handleSubmit = async () => {
-    // Ensure the form is valid
-    if (!labReport && Object.values(formData).some(value => value === '')) {
-      alert('Please fill in the required details or upload a lab report.');
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]); // Store the selected file
+  };
+
+  const handleFileUpload = async () => {
+    if (!file) {
+      alert("Please select a file to upload.");
       return;
     }
 
-    // Example API endpoint
-    const apiEndpoint = 'https://your-api.com/predict-heart-disease';
-
-    // Prepare data
-    const data = new FormData();
-    if (labReport) {
-      data.append('labReport', labReport);
-    } else {
-      data.append('formData', JSON.stringify(formData));
-    }
+    const formData = new FormData();
+    formData.append('file', file);
 
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch('http://127.0.0.1:8001/extract_values/', {
         method: 'POST',
-        body: data,
+        body: formData,
       });
 
-      const result = await response.json();
-      setPrediction(result.prediction);
-      setFormData({ age: '', sex: '', cp: '', trestbps: '', chol: '', fbs: '', restecg: '', thalach: '', exang: '', oldpeak: '', slope: '', ca: '', thal: '' });
-      setLabReport(null); // Clear uploaded file
+      const extractedData = await response.json();
+
+      console.log("Extracted Data: ", extractedData);
+      
+      // Process the extracted data into the required format
+      const diseaseData = {
+        Age: parseInt(extractedData.Age),
+        Sex: extractedData.Sex === "Male" ? 1 : 0,  // Male = 1, Female = 0 (adjust as needed)
+        RestingBP: parseInt(extractedData.RestingBP),
+        Cholesterol: parseInt(extractedData.Cholesterol),
+        FastingBS: extractedData.FastingBS === "1" ? 1 : 0,
+        MaxHR: parseInt(extractedData.MaxHR),
+        ExerciseAngina: extractedData.ExerciseAngina === "Yes" ? 1 : 0,
+        Oldpeak: parseFloat(extractedData.Oldpeak),
+        Smoking: extractedData.Smoking === "Yes" ? 1 : 0,
+        HyperTension: extractedData.Hypertension === "Yes" ? 1 : 0,
+        Diabetes: extractedData.Diabetes === "Yes" ? 1 : 0,
+        FamilyHistory: extractedData["Family History"] === "Yes" ? 1 : 0,
+        
+        // ChestPainType: Setting multiple options based on the extracted value
+        ChestPainType_ASY: extractedData.ChestPainType === "ASY" ? 1 : 0,
+        ChestPainType_ATA: extractedData.ChestPainType === "ATA" ? 1 : 0,
+        ChestPainType_NAP: extractedData.ChestPainType === "NAP" ? 1 : 0,
+        ChestPainType_TA: extractedData.ChestPainType === "TA" ? 1 : 0,
+      
+        // RestingECG: Setting multiple options based on the extracted value
+        RestingECG_LVH: extractedData.RestingECG === "LVH" ? 1 : 0,
+        RestingECG_Normal: extractedData.RestingECG === "Normal" ? 1 : 0,
+        RestingECG_ST: extractedData.RestingECG === "ST" ? 1 : 0,
+      
+        // ST_Slope: Setting multiple options based on the extracted value
+        ST_Slope_Down: extractedData.ST_Slope === "Down" ? 1 : 0,
+        ST_Slope_Flat: extractedData.ST_Slope === "Flat" ? 1 : 0,
+        ST_Slope_Up: extractedData.ST_Slope === "Up" ? 1 : 0,
+      };
+      
+      predictHeartDisease(diseaseData);
+      
+      
+      // Handle the extracted data (e.g., display it to the user)
     } catch (error) {
-      console.error('Error predicting heart disease:', error);
-      setPrediction('Error occurred while predicting. Please try again.');
+      console.error("Error uploading the file: ", error);
     }
   };
 
+  async function predictHeartDisease(diseaseData) {
+    const url = "http://127.0.0.1:8000/predict";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(diseaseData),
+      });
+      const data = await response.json();
+      if (data.prediction) {
+        Swal.fire({
+          icon: "success",
+          title: "Prediction Result",
+          text: `Prediction: ${data.prediction} with probability: ${data.probability}`,
+          confirmButtonText: "OK",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to get prediction from the server.",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An unexpected error occurred while making the prediction.",
+      });
+    }
+  }
+
+  
+
   return (
     <div>
-    <Upperheader title="Predict Heart Disease" name={username} />
-    <div className="predict-heart-disease-container">
-      
-      
-      {/* Informational Section */}
-      <section className="predict-heart-disease-info-section">
-        <img src={heartImage} alt="Heart" className="predict-heart-disease-heart-image" />
-        <div className="predict-heart-disease-info-text">
-          <h2>Understanding Heart Disease</h2>
-          <p>
-            Heart disease remains one of the leading causes of death globally. Early detection and lifestyle changes can significantly reduce the risk. Use this tool to assess your heart health by uploading your lab reports or entering your health details manually.
-          </p>
-        </div>
-      </section>
-
-      {/* Input Section */}
-      <section className="predict-heart-disease-input-section">
-        <h2>Provide Your Health Details</h2>
-        <div className="predict-heart-disease-input-options">
-          {/* Toggle between Upload and Manual Input */}
-          <div className="toggle-buttons">
-            <button 
-              className={isManualInput ? 'active' : ''} 
-              onClick={() => setIsManualInput(true)}>
-              Enter Details Manually
-            </button>
-            <button 
-              className={!isManualInput ? 'active' : ''} 
-              onClick={() => setIsManualInput(false)}>
-              Upload Lab Report
-            </button>
+      <div className="predict-heart-disease-container">
+        <section className="predict-heart-disease-info-section">
+          <img src={heartImage} alt="Heart" className="predict-heart-disease-heart-image" />
+          <div className="predict-heart-disease-info-text">
+            <h2>Understanding Heart Disease</h2>
+            <p>
+              Heart disease remains one of the leading causes of death globally. Early detection and lifestyle changes can significantly reduce the risk. Use this tool to assess your heart health by uploading your lab reports or entering your health details manually.
+            </p>
           </div>
+        </section>
 
-          {/* Image Upload Section */}
-          {!isManualInput && (
-            <div className="predict-heart-disease-upload-section">
-              <h3>Upload Lab Report</h3>
-              <input type="file" accept="image/*" onChange={handleImageUpload} />
-              {labReportError && <p className="error">{labReportError}</p>}
+        <section className="predict-heart-disease-input-section">
+          <h2>Provide Your Health Details</h2>
+          <div className="predict-heart-disease-input-options">
+            <div className="toggle-buttons">
+              <button style={{ marginRight: "1em" }} onClick={handleManualInputClick}>
+                Enter Details Manually
+              </button>
+              <button onClick={handleUploadClick}>
+                Upload Lab Report
+              </button>
             </div>
-          )}
 
-          {/* Manual Entry Section */}
-          {isManualInput && (
-            <div className="predict-heart-disease-manual-entry">
-              <h3>Enter Details Manually</h3>
-              <form className="predict-heart-disease-form">
-                <div className="predict-heart-disease-form-group">
-                  <label htmlFor="age">Age:</label>
-                  <input type="number" name="age" value={formData.age} onChange={handleInputChange} />
-                </div>
-                <div className="predict-heart-disease-form-group">
-                  <label htmlFor="sex">Sex:</label>
-                  <select name="sex" value={formData.sex} onChange={handleInputChange}>
-                    <option value="">Select</option>
-                    <option value="1">Male</option>
-                    <option value="0">Female</option>
-                  </select>
-                </div>
-                {/* Repeat form groups for the other fields */}
-              </form>
-            </div>
-          )}
-        </div>
-        <button className="predict-heart-disease-submit-button" onClick={handleSubmit}>Generate Result</button>
-      </section>
-
-      {/* Result Section */}
-      <section className="predict-heart-disease-result-section">
-        {prediction ? (
-          <div>
-            <h3>Your Prediction:</h3>
-            <p className="predict-heart-disease-prediction">{prediction}</p>
+            {!isManualInput && (
+              <div className="predict-heart-disease-upload-section">
+                <h3>Upload Lab Report</h3>
+                <input type="file" accept="image/*" onChange={handleFileChange} />
+                <button style={{margin:"3px"}} className='btn btn-danger' onClick={handleFileUpload}>Upload</button>
+              </div>
+            )}
           </div>
-        ) : (
-          <p>Prediction result will appear here.</p>
-        )}
-      </section>
-    </div>
+        </section>
+      </div>
     </div>
   );
 }

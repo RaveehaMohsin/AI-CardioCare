@@ -4,12 +4,22 @@ import joblib
 import numpy as np
 from typing import Literal
 from keras.models import load_model
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Initialize FastAPI app
 app = FastAPI(
     title="Heart Disease Prediction API",
     description="An API to predict heart disease based on patient data using a pre-trained Keras model.",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or you can specify allowed origins like ["http://example.com"]
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods like GET, POST, PUT, DELETE, etc.
+    allow_headers=["*"],
 )
 
 # Load the trained model with exception handling
