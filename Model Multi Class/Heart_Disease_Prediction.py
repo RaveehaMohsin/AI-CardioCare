@@ -21,7 +21,14 @@ from keras.layers import Dense, Dropout
 from keras.callbacks import EarlyStopping
 from keras.regularizers import l2
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import pickle
+import joblib
+import tensorflow as tf
+import random
 
+random.seed(42)
+np.random.seed(42)
+tf.random.set_seed(42)
 
 
 # Load dataset
@@ -128,82 +135,92 @@ print(f"Cleaned DataFrame shape: {heart_df_cleaned.shape}")
 # Neural networks perform better when features are centered and normalized.
 # The dataset does not appear to have severe outliers in these features, making standardization more appropriate than min-max scaling
 
-# Select numerical features for scaling
-numerical_features = ["Age", "RestingBP", "Cholesterol", "MaxHR" , "Oldpeak"]
-
-# Initialize the scaler
-scaler = StandardScaler()
-
-# Apply standardization to the selected features
-heart_df_scaled = heart_df.copy()
-heart_df_scaled[numerical_features] = scaler.fit_transform(heart_df_scaled[numerical_features])
-
-heart_df_scaled_cleaned = heart_df_cleaned.copy()
-heart_df_scaled_cleaned[numerical_features] = scaler.fit_transform(heart_df_scaled_cleaned[numerical_features])
-
-# Display the scaled features and check their statistical properties
-print(heart_df_scaled[numerical_features].describe())
-print(heart_df[numerical_features].describe())
-print(heart_df_scaled_cleaned[numerical_features].describe())
 
 
-#CORRELATION ANALYSIS
-# Compute the correlation matrix for numerical features
-correlation_matrix = heart_df_scaled.corr()
 
-# Plot the correlation heatmap
-plt.figure(figsize=(12, 8))
-sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
-plt.title("Correlation Heatmap", fontsize=16)
-plt.show()
+#HERE DOING SCALING , CLUSTERING  AND CLASS IMBALANCE
+#(WE HAVE BOTH CLEANED AND ORIGINAL DATASET IN THE END WE WILL SEE THE ACCURACY AND THEN FIND THAT WHICH DF TO USE)
+
+#SCALING THE DATA SET
+#Reasons to Scale Our Data 
+# Uniform Feature Contribution: Features like RestingBP, Cholesterol, and MaxHR have different scales and units.Without scaling, features with larger numerical ranges may disproportionately affect the model, leading to biased learning.
+# Improved Optimization: Neural networks use gradient-based optimization (e.g., backpropagation), which converges faster when input features are standardized 
+# Avoiding Bias: Neural networks treat all inputs equally if they are scaled to similar ranges, leading to a more balanced model.
+# Standardization (Z-score normalization) is suitable here because:
+# Neural networks perform better when features are centered and normalized.
+# The dataset does not appear to have severe outliers in these features, making standardization more appropriate than min-max scaling
 
 
 #Converting our Binary classification Model to Multi classification
 #Instead of relying only on one feature Oldpeak, we consider using a more sophisticated approach that includes multiple features. Creating clusters or thresholds across key features to derive meaningful classes.
 
-# Select features for clustering
-features_for_clustering = ['Oldpeak', 'MaxHR', 'Cholesterol' , 'ExerciseAngina' , 'ChestPainType_ASY' , 'ST_Slope_Flat']
-clustering_data = heart_df_scaled[features_for_clustering]
+
+#Now my classes are balanced I have done undersampling & oversampling by using smote (Synthetic Minority Oversampling Technique)
+# Before SMOTE: {np.int64(0): np.int64(262), np.int64(1): np.int64(147), np.int64(2): np.int64(325)}
+# After SMOTE: {np.int64(0): np.int64(325), np.int64(1): np.int64(325), np.int64(2): np.int64(325)}
+
+#Now I'll apply the model and see the f1score recall and precision and check if my model isnt overfitting
+# Since SMOTE introduces synthetic samples, there is a slight risk of overfitting if the model memorizes these samples. To mitigate this:
+# Use techniques like cross-validation.
+# Ensure that synthetic samples are only created for the training data, not the test set.
+
+# 1. Compute the correlation matrix for numerical features
+correlation_matrix = heart_df.corr()
+plt.figure(figsize=(10, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title('Correlation Matrix of Numerical Features')
+plt.show()
+
+# 1. Clustering to create 'HeartDiseaseMulticlass'
+# Apply clustering first
+features_for_clustering = ['Oldpeak', 'MaxHR', 'Cholesterol', 'ExerciseAngina', 'ChestPainType_ASY', 'ST_Slope_Flat']
+clustering_data = heart_df[features_for_clustering]
 
 # Apply KMeans clustering
 kmeans = KMeans(n_clusters=3, random_state=42)
-heart_df_scaled['HeartDiseaseMulticlass'] = kmeans.fit_predict(clustering_data)
+heart_df['HeartDiseaseMulticlass'] = kmeans.fit_predict(clustering_data)
 
-# Map cluster labels to classes (e.g., based on domain knowledge)
+# Map cluster labels to classes based on domain knowledge
 cluster_mapping = {0: 'No', 1: 'Maybe', 2: 'Yes'}
-heart_df_scaled['HeartDiseaseMulticlass'] = heart_df_scaled['HeartDiseaseMulticlass'].map(cluster_mapping)
+heart_df['HeartDiseaseMulticlass'] = heart_df['HeartDiseaseMulticlass'].map(cluster_mapping)
 
-# Display class distribution
-print(heart_df_scaled['HeartDiseaseMulticlass'].value_counts())
-print(heart_df_scaled['HeartDisease'].value_counts())
+# 2. Prepare the features and target for training
+X = heart_df.drop(['HeartDisease', 'HeartDiseaseMulticlass'], axis=1)  # Drop both target columns
+y = heart_df['HeartDiseaseMulticlass']  # Target is now 'HeartDiseaseMulticlass'
 
-#Which means in simple binary and also in multiclass we dont have healthy patients more, heart diseased patients count is more.
-# HeartDiseaseMulticlass
-# Yes      406
-# Maybe    327
-# No       185
-
-# HeartDiseaseBinary
-# 1    508
-# 0    410
-
-#Now handling the class imbalance
-# Separate features and target
-X = heart_df_scaled.drop(['HeartDisease', 'HeartDiseaseMulticlass'], axis=1)
-y = heart_df_scaled['HeartDiseaseMulticlass']
-
+# 3. Encode the target labels
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
-# Split the data before applying SMOTE
+# 4. Split the data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
 
-# Apply SMOTE on the training set
+# 5. Scaling the data
+# Select numerical features for scaling
+numerical_features = ["Age", "RestingBP", "Cholesterol", "MaxHR", "Oldpeak"]
+scaler = StandardScaler()
+
+# Fit the scaler on the training set and transform both the train and test sets
+X_train_scaled = scaler.fit_transform(X_train[numerical_features])
+X_test_scaled = scaler.transform(X_test[numerical_features])
+
+# Replace the numerical features in both training and testing data with their scaled versions
+X_train[numerical_features] = X_train_scaled
+X_test[numerical_features] = X_test_scaled
+
+# Save the scaler to use later during inference
+#joblib.dump(scaler, "scaler.pkl")
+
+# 6. Handle class imbalance using SMOTE
 smote = SMOTE(random_state=42)
 X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
+# Print class distribution before and after SMOTE
 print("Before SMOTE:", dict(zip(*np.unique(y_train, return_counts=True))))
 print("After SMOTE:", dict(zip(*np.unique(y_train_resampled, return_counts=True))))
+
+
+
 
 #Now my classes are balanced I have done undersampling & oversampling by using smote (Synthetic Minority Oversampling Technique)
 # Before SMOTE: {np.int64(0): np.int64(262), np.int64(1): np.int64(147), np.int64(2): np.int64(325)}
@@ -450,6 +467,8 @@ print(confusion_matrix(y_test, y_pred_nn))
 sns.heatmap(confusion_matrix(y_test, y_pred_nn), annot=True, fmt='d', cmap='Blues')
 plt.title("Neural Network Confusion Matrix")
 plt.show()
+
+#best_model.save('best_nn_model.keras') 
 
 
 

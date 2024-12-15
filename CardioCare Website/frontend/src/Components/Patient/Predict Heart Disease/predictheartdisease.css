@@ -1,0 +1,151 @@
+/* PredictHeartDisease.module.css */
+
+.predict-heart-disease-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffecec; /* Light red background for heart theme */
+    color: #333; /* Neutral text color */
+    padding: 20px;
+    margin-left: 250px; /* Left margin for the sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition for responsiveness */
+  }
+  
+  /* Adjust layout for smaller screens (less than 1250px) */
+  @media (max-width: 1250px) {
+    .predict-heart-disease-container {
+      margin-left: 0; /* Remove left margin for smaller screens */
+      padding: 15px; /* Adjust padding for smaller screens */
+    }
+  
+    .predict-heart-disease-info-section {
+      flex-direction: column; /* Stack the info section vertically on small screens */
+      text-align: center; /* Center the content */
+    }
+  
+    .predict-heart-disease-input-options {
+      flex-direction: column; /* Stack the input options vertically */
+      align-items: center; /* Center the content */
+      gap: 10px; /* Reduce gap between elements */
+    }
+  
+    .predict-heart-disease-form {
+      grid-template-columns: 1fr; /* Stack form fields in a single column */
+    }
+  
+    .predict-heart-disease-submit-button {
+      width: auto; /* Adjust button width */
+    }
+  
+    .predict-heart-disease-result-section {
+      padding: 15px; /* Adjust padding */
+    }
+  }
+  
+  .predict-heart-disease-info-section {
+    display: flex;
+    align-items: center;
+    background-color: #f8d7da; /* Soft red for information section */
+    border: 1px solid #f5c6cb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .predict-heart-disease-heart-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .predict-heart-disease-info-text h2 {
+    color: #b71c1c; /* Dark red for headings */
+  }
+  
+  .predict-heart-disease-input-section {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .predict-heart-disease-input-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .predict-heart-disease-upload-section {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .predict-heart-disease-or {
+    font-weight: bold;
+    color: #b71c1c;
+    align-self: center;
+  }
+  
+  .predict-heart-disease-manual-entry {
+    flex: 2;
+  }
+  
+  .predict-heart-disease-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .predict-heart-disease-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .predict-heart-disease-form-group label {
+    font-weight: bold;
+    color: #b71c1c;
+    margin-bottom: 5px;
+  }
+  
+  .predict-heart-disease-form-group input,
+  .predict-heart-disease-form-group select {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+  }
+  
+  .predict-heart-disease-submit-button {
+    background-color: #d32f2f;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .predict-heart-disease-submit-button:hover {
+    background-color: #b71c1c;
+  }
+  
+  .predict-heart-disease-result-section {
+    background-color: #fefefe;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .predict-heart-disease-result-section h3 {
+    color: #b71c1c;
+  }
+  
+  .predict-heart-disease-prediction {
+    font-weight: bold;
+    font-size: 18px;
+    color: #d32f2f;
+  }
+  
