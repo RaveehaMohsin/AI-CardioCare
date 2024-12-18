@@ -210,7 +210,7 @@ const handleSignIn = async (e) => {
               history.push("/patientprofile/patientadd");
           }
           else if (user.user.role === "Admin") {
-            history.push("/admin/profileadd");
+            history.push("/admin/dashboard");
         } 
         else {
               history.push("/");

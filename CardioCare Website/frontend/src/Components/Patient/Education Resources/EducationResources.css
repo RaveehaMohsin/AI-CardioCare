@@ -1,0 +1,84 @@
+.education-resources-container {
+  padding: 40px;
+  background-color: #ecf0f1;
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  margin-left: 0; /* Default no margin */
+}
+
+.education-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Ensure responsive columns */
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px; /* Set max width for larger screens */
+}
+
+.education-card {
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space out title, description, and button */
+}
+
+.education-card:hover {
+  transform: translateY(-10px);
+}
+
+.article-title {
+  color: #600000; /* Updated to your theme color */
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px; /* Add spacing below the title */
+}
+
+.article-description {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-bottom: 20px;
+  flex-grow: 1; /* Ensure this takes available space */
+}
+
+.read-more-btn {
+  background-color: #600000; /* Match your color theme */
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 10px 20px; /* Adjust button padding for better look */
+  text-align: center;
+  transition: all 0.3s ease;
+  align-self: flex-start; /* Align the button to the left */
+  border: none;
+  cursor: pointer;
+}
+
+.read-more-btn:hover {
+  background-color: #a10000; /* Darken button color on hover */
+}
+
+/* For larger screens (with dashboard) */
+@media (min-width: 1251px) {
+  .education-resources-container {
+    margin-left: 250px; /* Add margin for the dashboard */
+  }
+}
+
+@media (max-width: 768px) {
+  .education-card {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+  .article-title {
+    font-size: 16px; /* Adjust title size for smaller screens */
+  }
+  .article-description {
+    font-size: 12px; /* Adjust description size */
+  }
+  .read-more-btn {
+    font-size: 14px; /* Adjust button font size */
+    padding: 8px 15px; /* Adjust button padding for smaller screens */
+  }
+}

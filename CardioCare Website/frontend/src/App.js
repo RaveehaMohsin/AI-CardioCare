@@ -31,11 +31,19 @@ function App() {
         <Route exact path="/patientprofile/patientview" component={PatientMain} />
         <Route exact path="/patient/chatbot" component={PatientMain} />
         <Route exact path="/patient/heartdisease" component={PatientMain} />
-       
-
+        <Route exact path="/patient/recommendation" component={PatientMain} />
+        <Route exact path="/patient/resources" component={PatientMain} />
+        <Route exact path="/patient/report" component={PatientMain} />
+        <Route exact path="/patient/review" component={PatientMain} />
+        <Route exact path="/patient/contact" component={PatientMain} />
 
         {/* Admin Route */}
+        <Route exact path="/admin/dashboard" component={AdminMain} />
         <Route exact path="/admin/profileadd" component={AdminMain} />
+        <Route exact path="/admin/patientview" component={AdminMain} />
+        <Route exact path="/admin/patientsview/patientpersonprofile/:userId" component={AdminMain} />
+        <Route exact path="/admin/reviews" component={AdminMain} />
+        <Route exact path="/admin/profileview" component={AdminMain} />
 
         
        

@@ -5,7 +5,7 @@ import logo from "../../Assets/logoweb.png";
 export default function Navbar1() {
   return (
     <div>
-      <Navbar className="fixed-top" style={{ backgroundColor: "#003a57" }}>
+     <Navbar className="fixed-top" style={{ backgroundColor: "#4C0000" }}>
         <Navbar.Brand
           href="#home"
           style={{

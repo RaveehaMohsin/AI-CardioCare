@@ -1,0 +1,164 @@
+/* General Container */
+.dashboard-container {
+  padding: 20px;
+  color: #fff;
+  min-height: 100vh;
+  margin-left: 250px; /* Leave space for the sidebar */
+  transition: margin-left 0.3s ease;
+}
+
+.dashboard-container.sidebar-collapsed {
+  margin-left: 0; /* No margin when the sidebar is hidden */
+}
+
+
+
+/* Metrics Container */
+.main-metrics {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Metric Card */
+.metric-card {
+  flex: 1;
+  background: linear-gradient(135deg, #800000, #aa0000d0);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.metric-card:hover {
+  transform: scale(1.05);
+}
+
+/* Icon and Title */
+.icon-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.icon-dashboard {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1250px) {
+  .dashboard-container {
+    margin-left: 0; /* Sidebar collapses, so remove margin */
+  }
+
+  .main-metrics {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Employee and Graph Section */
+.empndgraph {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #400000;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+/* Ratio Graph (50%) */
+.ratiograph {
+  flex: 7; /* 50% width for the ratio graph */
+  background-color: #800000;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  height: 400px;
+}
+
+/* Patients Section (50%) */
+.patient-list {
+  flex: 3; /* 50% width for the patient list */
+  background-color: #600000;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 500px;
+  overflow-y: auto; /* Scroll for long patient lists */
+}
+
+.patient-list h6 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f4f4f4;
+  margin-bottom: 20px;
+}
+
+/* Patient Cards */
+.employee-card {
+  display: flex;
+  align-items: center;
+  background-color: #800000;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.employee-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.patient-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.patient-contact {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 1250px) {
+  .empndgraph {
+    flex-direction: column;
+  }
+
+  .ratiograph,
+  .patient-list {
+    flex: 1; /* Make them take full width in column layout */
+    width: 100%; /* Ensure they occupy the full width when stacked vertically */
+  }
+
+  .patient-list {
+    margin-top: 20px;
+  }
+}

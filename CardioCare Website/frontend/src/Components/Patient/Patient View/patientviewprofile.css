@@ -281,6 +281,24 @@
     margin-bottom: 40px;
   
   }
+
+  .health-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .detail span {
+    font-size: 14px;
+  }
   
   .line01 {
     width: 10px;

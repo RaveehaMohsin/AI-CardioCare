@@ -22,7 +22,7 @@ body {
     left: -250px; /* Hidden by default */
     width: 250px;
     height: calc(100% - 60px); /* Adjust for navbar height */
-    background-color: #00273a;
+    background-color: #600000;
     color: white;
     transition: left 0.3s ease;
     padding-top: 20px;
@@ -100,7 +100,7 @@ body {
 }
 
 .submenu {
-    background: linear-gradient(135deg, #001a24, #005c80);
+    background: linear-gradient(135deg, #4C0000, #dc0505d5); /* Blood red gradient */
     display: flex;
     flex-direction: column;
     margin-left: 20px; /* Indent submenu items */

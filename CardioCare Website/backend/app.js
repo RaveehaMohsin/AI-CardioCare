@@ -14,15 +14,24 @@ var usersRouter = require('./routes/users');
 //auth routers
 var addauthuser = require('./routes/Authentication/adduser')
 var getauthuser = require('./routes/Authentication/getuser')
+var getreview = require('./routes/Reviews/getreviews')
 
+//admin routers
+var getpatients = require('./routes/Admin/getpatients')
+var gethealthdetails = require('./routes/Admin/gethealthdetails')
+
+//contact
+var contactus = require('./routes/nodemail')
 
 //person routers
 var addperson = require('./routes/addperson')
 var getperson = require('./routes/getperson')
 var getuser = require('./routes/getuser')
-
-
-
+var healthpredict = require('./routes/heartpredict')
+var gethealth = require('./routes/gethealth')
+var addhealthreport = require('./routes/healthreportadd')
+var gethealthreport = require('./routes/healthreportget')
+var addreview = require('./routes/Reviews/addreview')
 
 var app = express();
 
@@ -55,14 +64,28 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
+//route for contact
+app.use('/contactus' , contactus);
+
 //routes for authentication
 app.use('/addauthuser' , addauthuser);
 app.use('/getauthuser' , getauthuser);
+
+//routes for admin
+app.use('/getpatients' , getpatients)
+app.use('/getreview' , getreview)
+app.use('/gethealthdetails' , gethealthdetails)
 
 //routes for person
 app.use('/addperson' , addperson);
 app.use('/getperson' , getperson);
 app.use('/getuser' , getuser);
+app.use('/health-details' , healthpredict)
+app.use('/gethealth' , gethealth)
+app.use('/addreview' , addreview)
+
+app.use('/addhealthreport' , addhealthreport)
+app.use('/gethealthreport', gethealthreport)
 
 
 

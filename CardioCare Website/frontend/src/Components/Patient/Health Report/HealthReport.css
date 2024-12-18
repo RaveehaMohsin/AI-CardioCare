@@ -1,0 +1,90 @@
+.health-report-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: row; /* Change flex-direction to row for horizontal layout */
+  gap: 20px; /* Add space between cards */
+}
+
+
+.health-report-card {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  width: 400px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.image-container {
+  margin-bottom: 20px;
+}
+
+.report-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.report-title {
+  font-size: 24px;
+  color: #600000; /* Maroon color */
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.report-description {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.report-actions {
+  margin-top: 20px;
+}
+
+.download-btn {
+  background-color: #600000; /* Maroon color */
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btn .icon1 {
+  margin-right: 8px;
+}
+
+.download-btn:hover {
+  background-color: #450000; /* Darker maroon color on hover */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .health-report-card {
+    padding: 20px;
+  }
+
+  .report-title {
+    font-size: 20px;
+  }
+
+  .report-description {
+    font-size: 14px;
+  }
+
+  .download-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

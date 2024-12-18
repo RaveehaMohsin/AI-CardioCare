@@ -192,6 +192,12 @@ y = heart_df['HeartDiseaseMulticlass']  # Target is now 'HeartDiseaseMulticlass'
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
+combined_df = X.copy()
+combined_df['y_encoded'] = y_encoded
+
+# Save the combined DataFrame to a CSV file
+combined_df.to_csv("features_with_target.csv", index=False)
+
 # 4. Split the data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
 

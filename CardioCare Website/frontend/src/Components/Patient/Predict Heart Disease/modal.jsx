@@ -4,6 +4,8 @@ import { FaHeart } from "react-icons/fa"; // Heart icon for "Add Disease"
 import Swal from "sweetalert2";
 
 const AddDisease = ({ isOpen, onCancel }) => {
+  const userData = JSON.parse(localStorage.getItem("AI-CardioCareUsers"));
+  const userId = userData.user.userId;
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [restingBP, setRestingBP] = useState("");
@@ -25,44 +27,44 @@ const AddDisease = ({ isOpen, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validate form data (same as before)
     if (age < 1 || age > 120) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Input",
-        text: "Age must be between 1 and 120.",
-      });
-      return;
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input",
+            text: "Age must be between 1 and 120.",
+        });
+        return;
     }
-  
+
     if (restingBP < 50 || restingBP > 300) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Input",
-        text: "Resting BP must be between 50 and 300.",
-      });
-      return;
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input",
+            text: "Resting BP must be between 50 and 300.",
+        });
+        return;
     }
-  
+
     if (cholesterol < 60 || cholesterol > 500) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Input",
-        text: "Cholesterol must be between 60 and 500.",
-      });
-      return;
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input",
+            text: "Cholesterol must be between 60 and 500.",
+        });
+        return;
     }
-  
+
     if (oldPeak < 0 || oldPeak > 10) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Input",
-        text: "Old peak must be between 0 and 10.",
-      });
-      return;
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input",
+            text: "Old peak must be between 0 and 10.",
+        });
+        return;
     }
-  
+
     // Prepare data for prediction
     const diseaseData = {
       Age: parseInt(age),  // Ensure Age is a float
@@ -88,53 +90,99 @@ const AddDisease = ({ isOpen, onCancel }) => {
       ST_Slope_Flat: stSlope === "Flat" ? 1 : 0,
       ST_Slope_Up: stSlope === "Up" ? 1 : 0,
   };
-  console.log(diseaseData)
-  
-  
+    console.log(diseaseData)
+
     // FastAPI endpoint URL
     const url = "http://127.0.0.1:8000/predict";
-  
+
     try {
-      // Make POST request to FastAPI backend
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(diseaseData),
-      });
-  
-      // Parse the JSON response
-      const data = await response.json();
-  
-      // Check if the response contains the prediction
-      if (data.prediction) {
-        // Display prediction using SweetAlert2
-        Swal.fire({
-          icon: "success",
-          title: "Prediction Result",
-          text: `Prediction: ${data.prediction} with probability: ${data.probability}`,
-          confirmButtonText: "OK",
+        // Make POST request to FastAPI backend
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(diseaseData),
         });
-      } else {
-        // Handle any errors from the server
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Failed to get prediction from the server.",
-          confirmButtonText: "OK",
-        });
-      }
+
+        // Parse the JSON response
+        const data = await response.json();
+
+        // Check if the response contains the prediction
+        if (data.prediction) {
+            // Display prediction using SweetAlert2
+            Swal.fire({
+                icon: "success",
+                title: "Prediction Result",
+                text: `Prediction: ${data.prediction} with probability: ${data.probability}`,
+                confirmButtonText: "OK",
+            });
+
+            // Prepare data to save to the backend
+            const backendData = {
+                userId: userId, // Replace with the actual userId
+                age: parseInt(age),  // Ensure age is an integer
+                gender: gender,  // Gender is a string (Male or Female)
+                restingBP: parseInt(restingBP),  // Ensure Resting BP is an integer
+                cholesterol: parseInt(cholesterol),  // Ensure Cholesterol is an integer
+                fastingBS: fastingBS === "1" ? 'High' : 'Low',  // FastingBS should be High or Low
+                maxHR: parseInt(maxHR),  // Ensure MaxHR is an integer
+                exerciseAngina: exerciseAngina === "1" ? 'Yes' : 'No',  // ExerciseAngina should be 'Yes' or 'No'
+                oldPeak: parseFloat(oldPeak),  // Ensure Oldpeak is a float
+                smoking: smoking === "1" ? 'Yes' : 'No',  // Smoking should be 'Yes' or 'No'
+                hyperTension: hyperTension === "1" ? 'Yes' : 'No',  // Hypertension should be 'Yes' or 'No'
+                diabetes: diabetes === "1" ? 'Yes' : 'No',  // Diabetes should be 'Yes' or 'No'
+                familyHistory: familyHistory === "1" ? 'Yes' : 'No',  // FamilyHistory should be 'Yes' or 'No'
+                chestPainType: chestPainType,  // ChestPainType already correctly mapped
+                restingECG: restingECG,  // RestingECG already correctly mapped
+                stSlope: stSlope,  // StSlope already correctly mapped
+                predictionResult: data.prediction, 
+                probability: data.probability, 
+            };
+
+            console.log(backendData)
+
+            // Save the data to the backend
+            const backendUrl = "http://localhost:4000/health-details"; // Adjust the URL to match your backend route
+            const saveResponse = await fetch(backendUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(backendData),
+            });
+
+            if (saveResponse.ok) {
+                
+            } else {
+                // Handle any errors from the server
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to save health details to the server.",
+                    confirmButtonText: "OK",
+                });
+            }
+        } else {
+            // Handle if no prediction was returned
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Failed to get prediction from the server.",
+                confirmButtonText: "OK",
+            });
+        }
     } catch (error) {
-      // Handle errors in the API request
-      console.error("Error:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "An unexpected error occurred while making the prediction.",
-      });
+        // Handle errors in the API request
+        console.error("Error:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An unexpected error occurred while making the prediction.",
+        });
     }
-  };
+};
+
   
 
   if (!isOpen) return null;

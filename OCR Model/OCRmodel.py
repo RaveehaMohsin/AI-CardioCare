@@ -19,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Specify the path to the Tesseract executable
 pytesseract.pytesseract.tesseract_cmd = r'C:\Users\DELL\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 
@@ -146,6 +147,7 @@ async def extract_values_from_image(file: UploadFile = File(...)):
 
     # Perform OCR on the image
     extracted_text_resized = pytesseract.image_to_string(img_resized)
+    print(extracted_text_resized)
 
     # Extract the values from the OCR result
     extracted_values = extract_values(extracted_text_resized)

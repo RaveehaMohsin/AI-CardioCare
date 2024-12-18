@@ -1,0 +1,177 @@
+:root {
+    --text-color: #303972;
+    --text-secondary: #00273a;
+    --light-color: #a098ae;
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #e8e3e3;
+    --gray-2: #757575;
+    --icon-color: #fb7d5b;
+    --icon-secondary: #fcc43e;
+  
+    --container-color: #f9f9f9;
+    --background-color: #00273a1a;
+  
+    --label01: #1eba62;
+    --labelB01: #ddfaea;
+    --label02: #fb7d5b;
+    --labelB02: #fff3f0;
+    --label03: #fd5353;
+    --labelB03: #ffeaea;
+  }
+  
+  .content-container {
+    width: 1250px;
+    margin-left: auto;
+    padding: 50px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 5px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px;
+    text-align: left;
+    border: none;
+    padding-bottom: 20px;
+  }
+  
+  .table td {
+    padding-top: 20px;
+  }
+  
+  .table tbody tr td:nth-child(1) {
+    color: var(--gray-2);
+    font-weight: bold;
+  }
+  
+  .table tbody tr td:nth-child(2) {
+    color: var(--text-secondary);
+    font-weight: bold;
+  }
+  .table tbody tr td:nth-child(3) {
+    color: var(--black);
+    font-weight: normal;
+  }
+  .table tbody tr td:nth-child(5) {
+    color: var(--text-color);
+    font-weight: bold;
+  }
+  .table tbody tr td:nth-child(4) {
+    color: var(--gray-2);
+  }
+  .table tbody tr td:nth-child(6) {
+    color: var(--text-secondary);
+  }
+  
+  .table th {
+    background-color: rgba(160, 152, 174, 0.1);
+    font-weight: bold;
+    padding: 15px;
+  }
+  
+  .table tbody tr {
+    background-color: var(--white);
+  }
+  
+  .table-profile-image {
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .view-button {
+    background-color: var(--gray);
+    color: var(--text-secondary);
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .view-button:hover {
+    color: var(--gray);
+    background-color: var(--text-secondary);
+    transform: scale(1.1);
+  }
+  
+  .table tbody tr {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.02);
+  }
+  .view-heading {
+    padding-left: 5px;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 5px;
+    margin: 0 auto; /* Center the table */
+    max-width: 100%;
+  }
+  
+  /* Table heading and cell alignment */
+  .table th,
+  .table td {
+    white-space: nowrap; /* Prevent text wrapping for large content */
+    text-align: left;
+  }
+  
+  /* Responsive adjustments for small screens */
+  @media (max-width: 768px) {
+    .content-container {
+      width: 100%; /* Ensure container fits small screens */
+      padding: 20px; /* Reduce padding on small screens */
+    }
+  
+    .table {
+      font-size: 12px; /* Adjust font size for smaller devices */
+    }
+  
+    .table-profile-image {
+      width: 30px; /* Adjust profile image size */
+      height: 30px;
+    }
+  
+    .view-button {
+      width: 30px; /* Adjust button size */
+      height: 30px;
+    }
+  
+    .table th,
+    .table td {
+      padding: 8px; /* Reduce padding for better fit */
+    }
+  }
+  
+  @media (max-width: 660px) {
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+  
+    .table th,
+    .table td {
+      padding: 6px;
+      text-align: left;
+    }
+  
+  
+    /* Hide the Gender and City columns */
+    th:nth-child(3), /* "Gender" header */
+    td:nth-child(3), /* "Gender" data */
+    th:nth-child(5), /* "City" header */
+    td:nth-child(5) /* "City" data */ {
+      display: none;
+    }
+  }
+  
