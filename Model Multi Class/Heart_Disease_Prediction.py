@@ -54,6 +54,7 @@ if heart_df.isnull().sum().any():
 else:
     print("\nNo missing values detected.")
 
+
 #Applying (ONE HOT ENCODING) to features like Chestpain , RestingECG & ST-Slope as they have nominal (non-ordered) categorical variables
 #For sex , exercise angina , smoking and family history doing (LABEL ENCODING)
 
