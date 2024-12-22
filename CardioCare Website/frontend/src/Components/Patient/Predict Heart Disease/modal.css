@@ -10,7 +10,7 @@
 dialog {
     width: 90%;
     max-width: 30rem;
-    background: linear-gradient(135deg, #00273a, #05768f); /* Gradient using your color scheme */
+    background: linear-gradient(135deg, #600000, #d703039e); /* Gradient using your color scheme */
     border-radius: 6px;
     border: none;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
@@ -42,9 +42,11 @@ dialog {
     font: inherit;
     padding: 10px 20px;
     border-radius: 4px;
-    border: 1px solid #5da6ba; /* Border using light scheme color */
-    background-color: #003a4e; /* Darkened background */
-    color: #abc9d1; /* Light color for text */
+/* Updated Red Theme Colors */
+border: 1px solid #b87272; /* Lightened red border */
+background-color: #7d1b1b; /* Warm, medium-dark red background */
+color: #f3bcbc; /* Light pastel red for text */
+
 }
   
 .actions {

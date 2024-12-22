@@ -19,7 +19,7 @@ const EducationResources = () => {
   
   return (
   <div>
-     <UpperHeader title="Report Generator" name={username} />
+     <UpperHeader title="Education Resources" name={username} />
     <div className="education-resources-container">
       <div className="education-resources-grid">
         {articles.map((article, index) => (

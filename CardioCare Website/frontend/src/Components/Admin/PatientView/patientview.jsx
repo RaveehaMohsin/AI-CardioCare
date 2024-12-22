@@ -37,7 +37,7 @@ const PatientViewAdmin = () => {
         const studentImages = data.map((student) => {
           return student.Img
             ? `http://localhost:4000${student.Img}`
-            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe-GsgDIkePXBSguri_zUGTWG0YEY1hMaKNw&s"; // Fallback to C1 if Img is missing
+            : "https://cdn-icons-png.flaticon.com/512/1533/1533506.png"; // Fallback to C1 if Img is missing
         });
         setImages(studentImages);
       } else {

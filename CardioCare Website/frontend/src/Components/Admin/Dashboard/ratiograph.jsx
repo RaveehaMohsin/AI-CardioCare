@@ -67,7 +67,7 @@ export default function HeartDiseasePredictionChart() {
               label: 'Prediction Result Counts',
               data: data,
               backgroundColor: 'rgba(75, 192, 192, 0.2)', // Adjust the background color for the line chart
-              borderColor: 'rgb(75, 192, 192)', // Line color
+              borderColor: 'rgb(179, 7, 22)', // Line color
               borderWidth: 2, // Set line width
               tension: 0.4, // Set the tension to create a smooth curve (spline effect)
               fill: true, // Fill area under the line

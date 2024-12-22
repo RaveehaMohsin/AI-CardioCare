@@ -115,10 +115,10 @@ const HealthReport = () => {
     // Add some spacing and style to the content
     doc.text(`Name: ${userData.user.firstName} ${userData.user.lastName || 'N/A'}`, 14, 60);
     doc.text(`Email: ${userData.user.email || 'N/A'}`, 14, 70);
-    doc.text(`Date of Birth: ${new Date(personData?.DOB).toLocaleDateString() || 'N/A'}`, 14, 90);
-    doc.text(`Gender: ${personData?.Gender || 'N/A'}`, 14, 100);
-    doc.text(`Phone: ${personData?.PhoneNo || 'N/A'}`, 14, 110);
-    doc.text(`Address: ${personData?.Address || 'N/A'}, ${personData?.City || 'N/A'}, ${personData?.Country || 'N/A'}`, 14, 120);
+    doc.text(`Date of Birth: ${new Date(personData?.DOB).toLocaleDateString() || 'N/A'}`, 14, 80);
+    doc.text(`Gender: ${personData?.Gender || 'N/A'}`, 14, 90);
+    doc.text(`Phone: ${personData?.PhoneNo || 'N/A'}`, 14, 100);
+    doc.text(`Address: ${personData?.Address || 'N/A'}, ${personData?.City || 'N/A'}, ${personData?.Country || 'N/A'}`, 14, 110);
   
     // You can also add bullets or other markers to make each entry stand out
     doc.setFontSize(10);
@@ -128,7 +128,6 @@ const HealthReport = () => {
     doc.text("- ", 10, 90);
     doc.text("- ", 10, 100);
     doc.text("- ", 10, 110);
-    doc.text("- ", 10, 120);
   
     // Section 2: Health Conditions
     doc.setTextColor(...black); 

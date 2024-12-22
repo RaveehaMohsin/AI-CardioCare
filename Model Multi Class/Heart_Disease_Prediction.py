@@ -114,7 +114,7 @@ heart_df_cleaned = remove_outliers(heart_df, numerical_columns)
 plt.figure(figsize=(15, 8))
 for i, col in enumerate(numerical_columns, 1):
     plt.subplot(2, 3, i)  # Adjust the grid if you add/remove columns
-    sns.boxplot(data=heart_df, y=col, color='skyblue')
+    sns.boxplot(data=heart_df, y=col, color='#600000')
     plt.title(f'Box Plot for {col}')
 plt.tight_layout()
 plt.show()
@@ -282,7 +282,7 @@ print("After SMOTE:", dict(zip(*np.unique(y_train_resampled, return_counts=True)
     # print(classification_report(y_test, y_pred_log_reg))
     # print(confusion_matrix(y_test, y_pred_log_reg))
 
-#(Logistic Regression Evaluation: 0.98)
+#(Logistic Regression Evaluation: 0.97)
 
 
 # Random Forest
@@ -320,7 +320,7 @@ print("After SMOTE:", dict(zip(*np.unique(y_train_resampled, return_counts=True)
     # print(classification_report(y_test, y_pred_svm))
     # print(confusion_matrix(y_test, y_pred_svm))
 
-#(SVM Evaluation:0.96)
+#(SVM Evaluation:0.93)
 
 
 # Neural Network
@@ -390,31 +390,38 @@ best_model = None
 best_val_loss = np.inf  # Initialize with a large value to track the best model
 
 # Loop through each fold
-for train_index, val_index in kf.split(X_train_resampled):
+for fold, (train_index, val_index) in enumerate(kf.split(X_train_resampled)):
+    print(f"Starting fold {fold + 1}...")
+
     # Split data
-    X_train_fold, X_val_fold = X_train_resampled.iloc[train_index], X_train_resampled.iloc[val_index]
-    y_train_fold, y_val_fold = y_train_resampled[train_index], y_train_resampled[val_index]
+    X_train_fold = X_train_resampled.iloc[train_index]
+    X_val_fold = X_train_resampled.iloc[val_index]
+    y_train_fold = y_train_resampled[train_index]
+    y_val_fold = y_train_resampled[val_index]
 
     # Define Neural Network Model
-    nn_model = Sequential()
-    nn_model.add(Dense(32, input_dim=X_train_fold.shape[1], activation='relu', kernel_regularizer=l2(0.01)))  # L2 regularization
-    nn_model.add(Dropout(0.7))  # Increased dropout
-    nn_model.add(Dense(16, activation='relu', kernel_regularizer=l2(0.01)))  # L2 regularization
-    nn_model.add(Dense(3, activation='softmax'))  # 3 classes
+    nn_model = Sequential([
+        Dense(32, input_dim=X_train_fold.shape[1], activation='relu', kernel_regularizer=l2(0.01)),
+        Dropout(0.7),  # Increased dropout to reduce overfitting
+        Dense(16, activation='relu', kernel_regularizer=l2(0.01)),
+        Dense(3, activation='softmax')  # Assuming 3 classes
+    ])
 
     # Compile the model
     nn_model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-    # Early Stopping
-    early_stopping = EarlyStopping(monitor='val_loss', patience=10)
-
-    # Learning Rate Scheduler
+    # Early Stopping and Learning Rate Scheduler
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, min_lr=1e-6)
 
     # Train the model
-    history = nn_model.fit(X_train_fold, y_train_fold, epochs=50, batch_size=32, 
-                           validation_data=(X_val_fold, y_val_fold), 
-                           callbacks=[early_stopping, reduce_lr], verbose=0)
+    history = nn_model.fit(
+        X_train_fold, y_train_fold,
+        epochs=50, batch_size=32,
+        validation_data=(X_val_fold, y_val_fold),
+        callbacks=[early_stopping, reduce_lr],
+        verbose=0
+    )
 
     # Save the training and validation losses for each fold
     train_losses.append(history.history['loss'])
@@ -425,54 +432,103 @@ for train_index, val_index in kf.split(X_train_resampled):
     max_epochs = max(max_epochs, len(history.history['loss']))
 
     # Track the best model based on validation loss
-    val_loss = min(history.history['val_loss'])  # Get the best validation loss for the fold
+    val_loss = min(history.history['val_loss'])
     if val_loss < best_val_loss:
         best_val_loss = val_loss
         best_model = nn_model
 
 # Pad the loss arrays to have the same length (max_epochs)
-train_losses_padded = [loss + [loss[-1]] * (max_epochs - len(loss)) for loss in train_losses]
-validation_losses_padded = [loss + [loss[-1]] * (max_epochs - len(loss)) for loss in validation_losses]
+def pad_loss_array(losses, max_length):
+    return [loss + [loss[-1]] * (max_length - len(loss)) for loss in losses]
 
-# Convert padded results to numpy arrays for easier analysis
-train_losses = np.array(train_losses_padded)
-validation_losses = np.array(validation_losses_padded)
-accuracies = np.array(accuracies)
+train_losses = np.array(pad_loss_array(train_losses, max_epochs))
+validation_losses = np.array(pad_loss_array(validation_losses, max_epochs))
 
 # Calculate mean and standard deviation of losses and accuracy
 mean_train_loss = train_losses.mean(axis=0)
 mean_val_loss = validation_losses.mean(axis=0)
-mean_accuracy = accuracies.mean()
+mean_accuracy = np.mean(accuracies)
 
 # Plot the loss curves for all folds
-plt.plot(mean_train_loss, label='Train Loss')
-plt.plot(mean_val_loss, label='Validation Loss')
-plt.title('Train vs Validation Loss (Cross-Validation)')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.legend()
+plt.figure(figsize=(10, 6))
+plt.plot(mean_train_loss, label='Mean Train Loss')
+plt.plot(mean_val_loss, label='Mean Validation Loss')
+plt.title('Train vs Validation Loss (Cross-Validation)', fontsize=14)
+plt.xlabel('Epochs', fontsize=12)
+plt.ylabel('Loss', fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True)
 plt.show()
 
 # Check if the model is overfitting by comparing the training and validation loss
-if mean_train_loss[-1] < mean_val_loss[-1]:
-    print("Model is overfitting!")
+overfitting_gap = mean_val_loss[-1] - mean_train_loss[-1]
+if overfitting_gap > 0.1:  # Define a threshold for overfitting
+    print("Model might be overfitting! Consider tuning hyperparameters or adding regularization.")
 else:
-    print("Model is not overfitting!")
+    print("Model is not overfitting.")
 
 # Print the average accuracy across all folds
 print(f'Average Accuracy: {mean_accuracy:.4f}')
 
-# Optionally, use the best model (based on validation performance) to make predictions on the test set
+# Use the best model (based on validation performance) to make predictions on the test set
 y_pred_nn = np.argmax(best_model.predict(X_test), axis=1)
 
 # Evaluate the model on the test set
-print("Neural Network Evaluation on Test Set:")
+print("\nNeural Network Evaluation on Test Set:")
 print(classification_report(y_test, y_pred_nn))
-print(confusion_matrix(y_test, y_pred_nn))
 
-# Plot confusion matrix
-sns.heatmap(confusion_matrix(y_test, y_pred_nn), annot=True, fmt='d', cmap='Blues')
-plt.title("Neural Network Confusion Matrix")
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred_nn)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Reds', cbar=False)
+plt.title("Confusion Matrix", fontsize=14)
+plt.xlabel("Predicted", fontsize=12)
+plt.ylabel("Actual", fontsize=12)
+plt.show()
+
+
+
+from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import label_binarize
+import matplotlib.pyplot as plt
+
+# Assuming y_test contains integer class labels
+n_classes = len(np.unique(y_test))  # Number of classes
+y_test_binarized = label_binarize(y_test, classes=np.arange(n_classes))
+
+# Obtain predicted probabilities for each class
+y_prob = best_model.predict(X_test)
+
+# Compute ROC curve and AUC for each class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test_binarized[:, i], y_prob[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Compute micro-average ROC curve and ROC area
+fpr["micro"], tpr["micro"], _ = roc_curve(y_test_binarized.ravel(), y_prob.ravel())
+roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+# Plot ROC curve for each class
+plt.figure(figsize=(10, 8))
+for i in range(n_classes):
+    plt.plot(fpr[i], tpr[i], label=f'Class {i}')
+
+# Plot micro-average ROC curve
+plt.plot(fpr["micro"], tpr["micro"],
+         label=f'Micro-average (AUC = {roc_auc["micro"]:.2f})',
+         linestyle=':', linewidth=4)
+
+# Plot random chance line
+plt.plot([0, 1], [0, 1], 'k--', linewidth=2)
+
+plt.title('ROC Curve for Neural Network')
+plt.xlabel('False Positive Rate (FPR)')
+plt.ylabel('True Positive Rate (TPR)')
+plt.legend(loc="lower right")
+plt.grid(alpha=0.5)
 plt.show()
 
 #best_model.save('best_nn_model.keras') 

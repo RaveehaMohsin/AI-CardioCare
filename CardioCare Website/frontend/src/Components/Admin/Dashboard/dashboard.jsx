@@ -10,6 +10,7 @@ export default function HeartDiseaseDashboard() {
   const userData = JSON.parse(localStorage.getItem("AI-CardioCareUsers"));
   const username = userData.user.firstName + " " + userData.user.lastName;
 
+  const [allpatients , setPatientsall] = useState();
   const [patients, setPatients] = useState([]);
   const [yespredictions, setPredictionsYes] = useState(0);
   const [nopredictions, setPredictionsNo] = useState(0);
@@ -18,9 +19,9 @@ export default function HeartDiseaseDashboard() {
     try {
       const response = await fetch('http://localhost:4000/getpatients'); // Adjust API endpoint as necessary
       const data = await response.json();
-  
+      setPatientsall(data.length)
       // Slice the first 5 patients from the data
-      const firstFivePatients = data.slice(0, 5);
+      const firstFivePatients = data.slice(0, 4);
   
       setPatients(firstFivePatients); // Set only the first 5 patients to the state
     } catch (error) {
@@ -77,7 +78,7 @@ export default function HeartDiseaseDashboard() {
               <FontAwesomeIcon icon={faUser} className="icon-dashboard" />
               <h4>Total Patients</h4>
             </div>
-            <h2>{patients.length}</h2> {/* Display the count of patients */}
+            <h2>{allpatients}</h2> {/* Display the count of patients */}
           </div>
 
           <div className="metric-card">
